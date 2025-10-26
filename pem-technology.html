@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEM Technology - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 33%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        .canvas-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        canvas {
+            display: block;
+            margin: 1rem auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+            canvas { width: 100% !important; height: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="introduction.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn active">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 2: PEM Technology -->
+        <div class="module">
+            <h2>🔬 Module 2: PEM Technology</h2>
+
+            <h3>Performance Characteristics</h3>
+            <div class="canvas-box">
+                <canvas id="perfCanvas" width="700" height="300"></canvas>
+                <p style="margin-top: 1rem;"><strong>Figure 2.1:</strong> Fuel cell voltage and power vs current density. The voltage curve (blue) shows cell voltage decreasing with load due to activation, ohmic, and mass transport losses. The power curve (red) shows peak power output occurring at moderate current densities.</p>
+            </div>
+
+            <h3>Key Specifications</h3>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Typical Value</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Single Cell Voltage</td>
+                    <td>0.6-0.8 V</td>
+                    <td>Operating range (OCV: 0.95-1.0V)</td>
+                </tr>
+                <tr>
+                    <td>Power Density</td>
+                    <td>0.4-1.0 W/cm²</td>
+                    <td>At active area</td>
+                </tr>
+                <tr>
+                    <td>System Efficiency</td>
+                    <td>40-60%</td>
+                    <td>LHV basis, including BoP losses</td>
+                </tr>
+                <tr>
+                    <td>Operating Temperature</td>
+                    <td>60-80°C</td>
+                    <td>Optimal for PEM</td>
+                </tr>
+                <tr>
+                    <td>Startup Time</td>
+                    <td>< 30 seconds</td>
+                    <td>From ambient temperature</td>
+                </tr>
+            </table>
+
+            <h3>Membrane Electrode Assembly (MEA)</h3>
+            <div class="info-box">
+                <h4>Key Components:</h4>
+                <p><strong>1. Proton Exchange Membrane:</strong> Nafion® polymer (15-50 μm thick) that conducts H⁺ ions</p>
+                <p><strong>2. Catalyst Layers:</strong> Platinum nanoparticles on carbon (0.2-0.4 mg Pt/cm² total)</p>
+                <p><strong>3. Gas Diffusion Layers:</strong> Carbon fiber paper with PTFE coating (200-250 μm)</p>
+                <p><strong>4. Bipolar Plates:</strong> Coated stainless steel or graphite composite with flow channels</p>
+            </div>
+
+            <div class="key-point">
+                <h3>Water Management Challenge</h3>
+                <p><strong>Too Dry:</strong> Membrane resistance increases (poor conductivity)</p>
+                <p><strong>Too Wet:</strong> Water floods gas channels (mass transport limitations)</p>
+                <p><strong>Solution:</strong> Control humidity (60-100% RH), temperature, and air stoichiometry</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (33% for third module - 3/9)
+        document.getElementById('progressBar').style.width = '33%';
+
+        // Canvas: Performance Curve
+        function drawPerformanceCurve() {
+            const canvas = document.getElementById('perfCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(60, 40);
+            ctx.lineTo(60, 260);
+            ctx.lineTo(660, 260);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Current Density (A/cm²)', 360, 290);
+            
+            ctx.save();
+            ctx.translate(20, 150);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillText('Voltage (V)', 0, 0);
+            ctx.restore();
+            
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i <= 100; i++) {
+                const current = i / 20;
+                const voltage = 0.95 - 0.05 * current - 0.08 * Math.pow(current, 1.5) - 0.02 * Math.pow(current, 2);
+                const x = 60 + current * 120;
+                const y = 260 - voltage * 200;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#f5576c';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            for (let i = 0; i <= 100; i++) {
+                const current = i / 20;
+                const voltage = 0.95 - 0.05 * current - 0.08 * Math.pow(current, 1.5) - 0.02 * Math.pow(current, 2);
+                const power = voltage * current;
+                const x = 60 + current * 120;
+                const y = 260 - power * 80;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            ctx.fillStyle = '#667eea';
+            ctx.fillRect(550, 50, 30, 4);
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Voltage', 590, 55);
+            
+            ctx.fillStyle = '#f5576c';
+            ctx.fillRect(550, 70, 30, 4);
+            ctx.fillStyle = '#333';
+            ctx.fillText('Power', 590, 75);
+        }
+
+        // Auto-draw canvas on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                drawPerformanceCurve();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

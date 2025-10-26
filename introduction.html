@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 11%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        .canvas-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="introduction.html" class="nav-btn active">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 0: Introduction -->
+        <div class="module">
+            <h2>🚀 Module 0: Introduction</h2>
+            
+            <div class="info-box">
+                <h3>Welcome to Hydrogen Fuel Cell Propulsion!</h3>
+                <p>This comprehensive course covers hydrogen fuel cell systems for low-speed vehicles, from basic principles to advanced integration techniques.</p>
+            </div>
+
+            <h3>Course Modules</h3>
+            <ol>
+                <li><strong>Fundamentals:</strong> Electrochemistry and fuel cell basics</li>
+                <li><strong>PEM Technology:</strong> Membrane electrode assembly details</li>
+                <li><strong>System Components:</strong> Balance of plant architecture</li>
+                <li><strong>Golf Cart Application:</strong> Practical sizing and integration</li>
+                <li><strong>Hybrid Integration:</strong> FC-battery topologies (series/parallel)</li>
+                <li><strong>Power Management:</strong> Control strategies and optimization</li>
+                <li><strong>Safety & Storage:</strong> Hydrogen handling and regulations</li>
+                <li><strong>Advanced Topics:</strong> Future technologies and trends</li>
+            </ol>
+
+            <div class="key-point">
+                <h3>Why Hydrogen for Golf Carts?</h3>
+                <p><strong>✓ Zero Emissions:</strong> Only water vapor produced</p>
+                <p><strong>✓ Fast Refueling:</strong> 2-3 minutes vs 2-8 hours charging</p>
+                <p><strong>✓ Extended Range:</strong> 80-120 km per kg H₂</p>
+                <p><strong>✓ Weight Savings:</strong> 300-400 kg lighter than lead-acid</p>
+                <p><strong>✓ Indoor Safe:</strong> No emissions during operation</p>
+            </div>
+
+            <h3>Real-World Example: Mike Strizki's Golf Cart</h3>
+            <div class="info-box">
+                <p><cite index="5-1">Mike Strizki converted a GEM golf cart at Mohegan Sun resort using a 3 kW fuel cell. The hydrogen fuel comes in a four-pound canister under 2,500 psi, which can be easily purchased from commercial specialty gas providers. The refueling process takes only two minutes.</cite></p>
+                <p style="margin-top: 1rem;"><strong>System Cost:</strong> ~$3,000-5,000 for conversion</p>
+                <p><strong>Benefits:</strong> Non-polluting for indoor use, extended range, fast refueling</p>
+            </div>
+
+            <h3>Typical Fuel Cell Stack for Golf Carts</h3>
+            <div class="info-box">
+                <p><strong>Compact PEM Fuel Cell Stack (1.2-3 kW):</strong></p>
+                <ul>
+                    <li><strong>Physical Size:</strong> Approximately 30×20×15 cm (comparable to a car battery)</li>
+                    <li><strong>Weight:</strong> 8-15 kg (stack only)</li>
+                    <li><strong>Construction:</strong> Multiple cells stacked in series (50-80 cells typical for 48V)</li>
+                    <li><strong>Cooling:</strong> Liquid cooled with integrated coolant channels</li>
+                    <li><strong>Connections:</strong> H₂ inlet, air inlet, coolant ports, electrical terminals</li>
+                    <li><strong>Appearance:</strong> Metallic rectangular box with end plates, manifolds, and cooling fins</li>
+                </ul>
+                <p style="margin-top: 1rem;"><cite index="6-1">Oakland University students used a 1.2 kW fuel cell system from Heliocentris Energy Systems Inc. for their hydrogen golf cart conversion. The system provides power to the vehicle's motor with a battery supplying additional power during high demand periods.</cite></p>
+                <p style="margin-top: 1rem;"><em>Note: Modern fuel cell stacks are compact enough to fit in the space of a traditional golf cart battery compartment, making retrofits feasible.</em></p>
+            </div>
+
+            <h3>Real-World Fuel Cell Stack for Golf Carts</h3>
+            <div class="canvas-box">
+                <svg width="700" height="500" viewBox="0 0 700 500" style="max-width: 100%; height: auto;">
+                    <!-- Title -->
+                    <text x="350" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Compact PEM Fuel Cell Stack (1.2-3 kW)</text>
+                    <text x="350" y="45" text-anchor="middle" font-size="12" fill="#666">Typical design for golf cart and low-speed vehicle applications</text>
+                    
+                    <!-- Main Stack Body -->
+                    <defs>
+                        <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#c0c0c0;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="cellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.8" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Stack Base with 3D effect -->
+                    <rect x="200" y="100" width="300" height="280" fill="url(#metalGrad)" stroke="#555" stroke-width="2"/>
+                    
+                    <!-- Individual cells stacked (showing layered structure) -->
+                    <g id="cells">
+                        <rect x="210" y="110" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="118" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="126" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="134" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="142" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="150" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="158" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="166" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="174" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="182" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="190" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="198" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="206" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="214" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="222" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="230" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="238" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="246" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                        <rect x="210" y="254" width="280" height="4" fill="#667eea" opacity="0.9"/>
+                        <rect x="210" y="262" width="280" height="4" fill="#764ba2" opacity="0.8"/>
+                    </g>
+                    
+                    <!-- End Plates (Compression plates) -->
+                    <rect x="180" y="85" width="340" height="15" fill="#555" stroke="#333" stroke-width="2"/>
+                    <rect x="180" y="380" width="340" height="15" fill="#555" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Tie Rods (hold stack together) -->
+                    <rect x="190" y="85" width="8" height="310" fill="#444" stroke="#222" stroke-width="1"/>
+                    <rect x="502" y="85" width="8" height="310" fill="#444" stroke="#222" stroke-width="1"/>
+                    
+                    <!-- H2 Inlet Manifold (left side) -->
+                    <rect x="160" y="180" width="40" height="20" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+                    <text x="180" y="194" text-anchor="middle" font-size="10" fill="white" font-weight="bold">H₂</text>
+                    <line x1="160" y1="190" x2="200" y2="190" stroke="#2E7D32" stroke-width="2"/>
+                    
+                    <!-- Air Inlet Manifold (left side, lower) -->
+                    <rect x="160" y="280" width="40" height="20" fill="#2196F3" stroke="#1565C0" stroke-width="2"/>
+                    <text x="180" y="294" text-anchor="middle" font-size="10" fill="white" font-weight="bold">AIR</text>
+                    <line x1="160" y1="290" x2="200" y2="290" stroke="#1565C0" stroke-width="2"/>
+                    
+                    <!-- Coolant Inlet (bottom) -->
+                    <rect x="270" y="400" width="30" height="20" fill="#00BCD4" stroke="#00838F" stroke-width="2"/>
+                    <text x="285" y="414" text-anchor="middle" font-size="9" fill="white" font-weight="bold">IN</text>
+                    
+                    <!-- Coolant Outlet (bottom) -->
+                    <rect x="400" y="400" width="30" height="20" fill="#FF5722" stroke="#D84315" stroke-width="2"/>
+                    <text x="415" y="414" text-anchor="middle" font-size="9" fill="white" font-weight="bold">OUT</text>
+                    
+                    <!-- Electrical Terminals (right side) -->
+                    <circle cx="530" cy="150" r="12" fill="#FFD700" stroke="#FF8F00" stroke-width="2"/>
+                    <text x="530" y="155" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">+</text>
+                    <circle cx="530" cy="320" r="12" fill="#757575" stroke="#424242" stroke-width="2"/>
+                    <text x="530" y="325" text-anchor="middle" font-size="14" fill="white" font-weight="bold">-</text>
+                    
+                    <!-- Exhaust Outlets (right side) -->
+                    <rect x="500" y="200" width="40" height="15" fill="#9E9E9E" stroke="#616161" stroke-width="2"/>
+                    <text x="520" y="210" text-anchor="middle" font-size="8" fill="white" font-weight="bold">H₂O+AIR</text>
+                    
+                    <!-- Cooling Fins (top) -->
+                    <rect x="210" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="230" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="250" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="270" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="290" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="310" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="330" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="350" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="370" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="390" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="410" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="430" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="450" y="70" width="8" height="15" fill="#888"/>
+                    <rect x="470" y="70" width="8" height="15" fill="#888"/>
+                    
+                    <!-- Labels with arrows -->
+                    <text x="50" y="195" font-size="12" fill="#333" font-weight="bold">Hydrogen</text>
+                    <text x="50" y="210" font-size="12" fill="#333">Input</text>
+                    <line x1="120" y1="190" x2="155" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <text x="50" y="295" font-size="12" fill="#333" font-weight="bold">Air</text>
+                    <text x="50" y="310" font-size="12" fill="#333">Input</text>
+                    <line x1="90" y1="290" x2="155" y2="290" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <text x="560" y="155" font-size="12" fill="#333" font-weight="bold">Positive</text>
+                    <text x="560" y="170" font-size="12" fill="#333">Terminal</text>
+                    
+                    <text x="560" y="320" font-size="12" fill="#333" font-weight="bold">Negative</text>
+                    <text x="560" y="335" font-size="12" fill="#333">Terminal</text>
+                    
+                    <text x="560" y="210" font-size="12" fill="#333" font-weight="bold">Exhaust</text>
+                    <text x="560" y="225" font-size="12" fill="#333">(Water+Air)</text>
+                    <line x1="545" y1="207" x2="540" y2="207" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Dimensions -->
+                    <line x1="180" y1="440" x2="520" y2="440" stroke="#FF5722" stroke-width="2"/>
+                    <line x1="180" y1="435" x2="180" y2="445" stroke="#FF5722" stroke-width="2"/>
+                    <line x1="520" y1="435" x2="520" y2="445" stroke="#FF5722" stroke-width="2"/>
+                    <text x="350" y="460" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">~30 cm</text>
+                    
+                    <line x1="150" y1="85" x2="150" y2="395" stroke="#FF5722" stroke-width="2"/>
+                    <line x1="145" y1="85" x2="155" y2="85" stroke="#FF5722" stroke-width="2"/>
+                    <line x1="145" y1="395" x2="155" y2="395" stroke="#FF5722" stroke-width="2"/>
+                    <text x="110" y="240" text-anchor="middle" font-size="12" fill="#333" font-weight="bold" transform="rotate(-90 110 240)">~20 cm</text>
+                    
+                    <!-- Arrow marker definition -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+                        </marker>
+                    </defs>
+                    
+                    <!-- Cell count label -->
+                    <text x="350" y="235" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold" opacity="0.9">60-72 Individual Cells</text>
+                    <text x="350" y="250" text-anchor="middle" font-size="10" fill="#fff" opacity="0.9">(Stacked in Series)</text>
+                </svg>
+                <p style="margin-top: 1rem;"><strong>Figure 0.1:</strong> Realistic representation of a compact PEM fuel cell stack suitable for golf cart applications. The stack consists of 60-72 individual cells stacked in series to produce 48V DC output, with integrated manifolds for hydrogen, air, and coolant distribution.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (11% for first module)
+        document.getElementById('progressBar').style.width = '11%';
+    </script>
+</body>
+</html>

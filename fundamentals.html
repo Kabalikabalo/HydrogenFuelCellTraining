@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 22%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        .canvas-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="introduction.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn active">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 1: Fundamentals -->
+        <div class="module">
+            <h2>⚛️ Module 1: Fuel Cell Fundamentals</h2>
+
+            <h3>What is a Fuel Cell?</h3>
+            <p>A fuel cell converts chemical energy from hydrogen and oxygen directly into electricity through electrochemical reactions, producing only water and heat as byproducts.</p>
+
+            <div class="info-box">
+                <h3>Fuel Cells vs Batteries</h3>
+                <p><strong>Batteries:</strong> Store energy, must be recharged when depleted</p>
+                <p><strong>Fuel Cells:</strong> Generate electricity continuously as long as fuel is supplied</p>
+            </div>
+
+            <h3>Basic Reactions</h3>
+            <div class="key-point">
+                <p><strong>Anode (Hydrogen Oxidation):</strong> H₂ → 2H⁺ + 2e⁻</p>
+                <p>Hydrogen splits into protons and electrons</p>
+                
+                <p style="margin-top: 1rem;"><strong>Cathode (Oxygen Reduction):</strong> ½O₂ + 2H⁺ + 2e⁻ → H₂O</p>
+                <p>Oxygen combines with protons and electrons to form water</p>
+                
+                <p style="margin-top: 1rem;"><strong>Overall:</strong> H₂ + ½O₂ → H₂O + Electricity + Heat</p>
+            </div>
+
+            <h3>Types of Fuel Cells</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Operating Temp</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>PEM (Proton Exchange Membrane)</strong></td>
+                    <td>60-80°C</td>
+                    <td>Vehicles, portable power</td>
+                </tr>
+                <tr>
+                    <td>Solid Oxide (SOFC)</td>
+                    <td>600-1000°C</td>
+                    <td>Stationary power</td>
+                </tr>
+                <tr>
+                    <td>Alkaline (AFC)</td>
+                    <td>60-90°C</td>
+                    <td>Space, military</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <h3>Why PEM for Golf Carts?</h3>
+                <ul>
+                    <li>Low operating temperature (quick startup)</li>
+                    <li>High power density (compact, lightweight)</li>
+                    <li>Fast response to power demands</li>
+                    <li>Proven technology with established supply chain</li>
+                </ul>
+            </div>
+
+            <h3>Fuel Cell Schematic Diagram</h3>
+            <div class="canvas-box">
+                <svg width="800" height="450" viewBox="0 0 800 450" style="max-width: 100%; height: auto;">
+                    <!-- Title -->
+                    <text x="400" y="25" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">Proton Exchange Membrane (PEM) Fuel Cell Operation</text>
+                    
+                    <!-- Anode Side -->
+                    <rect x="50" y="100" width="220" height="250" fill="#e3f2fd" stroke="#1976d2" stroke-width="3" rx="10"/>
+                    <text x="160" y="130" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">ANODE (-)</text>
+                    <text x="160" y="150" text-anchor="middle" font-size="14" fill="#333">Negative Electrode</text>
+                    
+                    <!-- Hydrogen Input -->
+                    <path d="M 20 200 L 50 200" stroke="#1976d2" stroke-width="3" marker-end="url(#arrowH2)"/>
+                    <text x="15" y="185" font-size="16" font-weight="bold" fill="#1976d2">H₂</text>
+                    <text x="10" y="215" font-size="11" fill="#333">Hydrogen</text>
+                    <text x="15" y="227" font-size="11" fill="#333">Gas</text>
+                    
+                    <!-- Anode Reaction -->
+                    <text x="160" y="210" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Oxidation Reaction:</text>
+                    <text x="160" y="235" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">H₂ → 2H⁺ + 2e⁻</text>
+                    
+                    <!-- Catalyst Layer Anode -->
+                    <rect x="80" y="255" width="160" height="20" fill="#ffeb3b" stroke="#f57f17" stroke-width="2"/>
+                    <text x="160" y="269" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Pt Catalyst Layer</text>
+                    
+                    <!-- Water out from anode (minimal) -->
+                    <path d="M 160 350 L 160 380" stroke="#2196f3" stroke-width="2" stroke-dasharray="3,3"/>
+                    <text x="160" y="395" text-anchor="middle" font-size="10" fill="#666">H₂O (trace)</text>
+                    
+                    <!-- Membrane -->
+                    <rect x="270" y="100" width="60" height="250" fill="#fff3e0" stroke="#f57c00" stroke-width="4" rx="5"/>
+                    <text x="300" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="#f57c00" transform="rotate(-90 300 160)">PROTON EXCHANGE</text>
+                    <text x="300" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#f57c00" transform="rotate(-90 300 260)">MEMBRANE (Nafion)</text>
+                    
+                    <!-- Proton Flow through membrane -->
+                    <circle cx="285" cy="180" r="6" fill="#f57c00">
+                        <animate attributeName="cx" from="285" to="315" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="285" cy="210" r="6" fill="#f57c00">
+                        <animate attributeName="cx" from="285" to="315" dur="2.3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="285" cy="240" r="6" fill="#f57c00">
+                        <animate attributeName="cx" from="285" to="315" dur="1.8s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="300" y="300" text-anchor="middle" font-size="12" fill="#f57c00" font-weight="bold">H⁺ →</text>
+                    
+                    <!-- Cathode Side -->
+                    <rect x="330" y="100" width="220" height="250" fill="#fce4ec" stroke="#c2185b" stroke-width="3" rx="10"/>
+                    <text x="440" y="130" text-anchor="middle" font-size="18" font-weight="bold" fill="#c2185b">CATHODE (+)</text>
+                    <text x="440" y="150" text-anchor="middle" font-size="14" fill="#333">Positive Electrode</text>
+                    
+                    <!-- Oxygen Input -->
+                    <path d="M 580 200 L 550 200" stroke="#c2185b" stroke-width="3" marker-end="url(#arrowO2)"/>
+                    <text x="590" y="185" font-size="16" font-weight="bold" fill="#c2185b">O₂</text>
+                    <text x="585" y="215" font-size="11" fill="#333">Oxygen</text>
+                    <text x="585" y="227" font-size="11" fill="#333">(from Air)</text>
+                    
+                    <!-- Cathode Reaction -->
+                    <text x="440" y="195" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Reduction Reaction:</text>
+                    <text x="440" y="220" text-anchor="middle" font-size="16" font-weight="bold" fill="#c2185b">½O₂ + 2H⁺ + 2e⁻</text>
+                    <text x="440" y="240" text-anchor="middle" font-size="18" font-weight="bold" fill="#c2185b">→ H₂O</text>
+                    
+                    <!-- Catalyst Layer Cathode -->
+                    <rect x="360" y="255" width="160" height="20" fill="#ffeb3b" stroke="#f57f17" stroke-width="2"/>
+                    <text x="440" y="269" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">Pt Catalyst Layer</text>
+                    
+                    <!-- Water Output -->
+                    <path d="M 440 350 L 440 390" stroke="#2196f3" stroke-width="4" marker-end="url(#arrowWater)"/>
+                    <text x="440" y="415" text-anchor="middle" font-size="16" font-weight="bold" fill="#2196f3">H₂O + Heat</text>
+                    <text x="440" y="430" text-anchor="middle" font-size="11" fill="#333">Water Vapor Output</text>
+                    
+                    <!-- External Circuit (Electron Flow) -->
+                    <path d="M 160 100 L 160 50 L 440 50 L 440 100" stroke="#ff9800" stroke-width="5" fill="none"/>
+                    <text x="300" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#ff9800">EXTERNAL CIRCUIT</text>
+                    
+                    <!-- Electron flow animation -->
+                    <circle cx="160" cy="50" r="8" fill="#ff9800">
+                        <animate attributeName="cx" from="160" to="440" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="160" cy="50" r="8" fill="#ff9800">
+                        <animate attributeName="cx" from="160" to="440" dur="3s" begin="1s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="160" cy="50" r="8" fill="#ff9800">
+                        <animate attributeName="cx" from="160" to="440" dur="3s" begin="2s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Electron labels -->
+                    <text x="210" y="70" font-size="14" font-weight="bold" fill="#ff9800">e⁻ → Electricity Generation → e⁻</text>
+                    
+                    <!-- Load Symbol -->
+                    <rect x="280" y="45" width="40" height="20" fill="none" stroke="#333" stroke-width="2"/>
+                    <path d="M 285 50 L 290 55 L 295 50 L 300 55 L 305 50 L 310 55 L 315 50" stroke="#333" stroke-width="2" fill="none"/>
+                    <text x="300" y="80" text-anchor="middle" font-size="10" fill="#333">LOAD</text>
+                    <text x="300" y="90" text-anchor="middle" font-size="9" fill="#666">(Motor)</text>
+                    
+                    <!-- Overall Reaction Box -->
+                    <rect x="600" y="100" width="180" height="250" fill="#e8f5e9" stroke="#2e7d32" stroke-width="3" rx="10"/>
+                    <text x="690" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">OVERALL</text>
+                    <text x="690" y="150" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">REACTION</text>
+                    
+                    <text x="690" y="190" text-anchor="middle" font-size="16" fill="#333">2H₂ + O₂</text>
+                    <text x="690" y="215" text-anchor="middle" font-size="18" font-weight="bold" fill="#2e7d32">→</text>
+                    <text x="690" y="240" text-anchor="middle" font-size="16" fill="#333">2H₂O</text>
+                    <text x="690" y="260" text-anchor="middle" font-size="14" fill="#333">+ Electricity</text>
+                    <text x="690" y="280" text-anchor="middle" font-size="14" fill="#333">+ Heat</text>
+                    
+                    <text x="690" y="315" text-anchor="middle" font-size="12" font-weight="bold" fill="#4caf50">✓ Zero Emissions</text>
+                    <text x="690" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#4caf50">✓ High Efficiency</text>
+                    
+                    <!-- Arrow Markers -->
+                    <defs>
+                        <marker id="arrowH2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#1976d2"/>
+                        </marker>
+                        <marker id="arrowO2" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                            <path d="M9,0 L9,6 L0,3 z" fill="#c2185b"/>
+                        </marker>
+                        <marker id="arrowWater" markerWidth="10" markerHeight="10" refX="3" refY="0" orient="auto">
+                            <path d="M0,0 L6,0 L3,9 z" fill="#2196f3"/>
+                        </marker>
+                    </defs>
+                </svg>
+                <p style="margin-top: 1rem;"><strong>Figure 1.1:</strong> Detailed schematic showing PEM fuel cell operation with hydrogen oxidation at anode, proton transport through membrane, oxygen reduction at cathode, and electron flow through external circuit generating electricity</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (22% for second module - 2/9)
+        document.getElementById('progressBar').style.width = '22%';
+    </script>
+</body>
+</html>

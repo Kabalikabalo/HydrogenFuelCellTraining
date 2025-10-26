@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Cart Application - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 56%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="introduction.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn active">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 4: Golf Cart Application -->
+        <div class="module">
+            <h2>⛳ Module 4: Golf Cart Application</h2>
+
+            <h3>Power Requirements</h3>
+            <div class="info-box">
+                <p><strong>Typical Golf Cart Power Profile:</strong></p>
+                <ul>
+                    <li>Cruising at 25 km/h on flat: 0.8-1.2 kW</li>
+                    <li>Climbing 10% grade: 2-3 kW</li>
+                    <li>Acceleration peak: 3-4 kW</li>
+                    <li>Auxiliary loads: 0.2-0.4 kW</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Recommended System:</strong> 2-3 kW FC + 2-3 kW battery + 5 kW motor</p>
+            </div>
+
+            <h3>Range Calculation</h3>
+            <div class="key-point">
+                <p><strong>Given:</strong></p>
+                <ul>
+                    <li>H₂ storage: 1.0 kg at 700 bar</li>
+                    <li>System efficiency: 45% (LHV basis)</li>
+                    <li>Average power: 1.2 kW</li>
+                    <li>H₂ energy: 33.3 kWh/kg (LHV)</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Calculation:</strong></p>
+                <p>Available energy = 1.0 kg × 33.3 kWh/kg × 45% = 15.0 kWh</p>
+                <p>Operating time = 15.0 kWh ÷ 1.2 kW = 12.5 hours</p>
+                <p>Range at 25 km/h = 12.5 h × 25 km/h = 312 km theoretical</p>
+                <p style="margin-top: 1rem; color: #f5576c;"><strong>Practical range: 100-140 km per kg H₂</strong></p>
+            </div>
+
+            <h3>Performance Comparison</h3>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Lead-Acid</th>
+                    <th>Lithium-Ion</th>
+                    <th>Hydrogen FC</th>
+                </tr>
+                <tr>
+                    <td>Range</td>
+                    <td>40-60 km</td>
+                    <td>60-80 km</td>
+                    <td>80-120 km/kg H₂</td>
+                </tr>
+                <tr>
+                    <td>Refuel Time</td>
+                    <td>6-8 hours</td>
+                    <td>2-4 hours</td>
+                    <td>2-3 minutes</td>
+                </tr>
+                <tr>
+                    <td>System Weight</td>
+                    <td>400-600 kg</td>
+                    <td>150-200 kg</td>
+                    <td>80-120 kg</td>
+                </tr>
+                <tr>
+                    <td>Lifetime</td>
+                    <td>4-6 years</td>
+                    <td>7-10 years</td>
+                    <td>10-15 years (stack)</td>
+                </tr>
+            </table>
+
+            <h3>Real-World Example</h3>
+            <div class="info-box">
+                <p><cite index="4-1">A fuel cell hybrid golf cart was tested over a 100-km drive on a plain route with an average speed of about 18 km/h. The fuel cell system had an efficiency of over 30% at the power consumption required for vehicle cruise.</cite></p>
+                <p style="margin-top: 1rem;"><cite index="1-1">Hybrid fuel cell systems for light electric vehicles showed energy consumption of 0.11 kWh/km, with increases of up to 80% in maximum distance compared to battery-only systems.</cite></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (56% for fifth module - 5/9)
+        document.getElementById('progressBar').style.width = '56%';
+    </script>
+</body>
+</html>
