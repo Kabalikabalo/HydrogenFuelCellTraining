@@ -224,7 +224,7 @@
     </div>
 
     <div class="nav">
-        <a href="introduction.html" class="nav-btn">Introduction</a>
+        <a href="index.html" class="nav-btn">Introduction</a>
         <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
         <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
         <a href="system-components.html" class="nav-btn">System Components</a>
@@ -404,6 +404,35 @@
                     ctx.stroke();
                 }
                 
+                // Helper function to find intersection point between two line segments
+                function findIntersection(p1, p2) {
+                    const EPSILON = 0.001; // Small tolerance for floating point comparison
+                    
+                    // Check if p1 is at intersection point
+                    if (Math.abs(p1.total - p1.fc) < EPSILON) {
+                        return p1;
+                    }
+                    
+                    // Check if p2 is at intersection point
+                    if (Math.abs(p2.total - p2.fc) < EPSILON) {
+                        return p2;
+                    }
+                    
+                    // Find where total crosses fc between p1 and p2
+                    if ((p1.total - p1.fc) * (p2.total - p2.fc) > 0) return null; // No crossing
+                    
+                    // Linear interpolation to find crossing point
+                    const diff1 = p1.total - p1.fc;
+                    const diff2 = p2.total - p2.fc;
+                    const ratio = Math.abs(diff1) / (Math.abs(diff1) + Math.abs(diff2));
+                    
+                    const t = p1.t + (p2.t - p1.t) * ratio;
+                    const value = p1.fc + (p2.fc - p1.fc) * ratio;
+                    
+                    return { t: t, fc: value, total: value };
+                }
+                
+                // Phase 3: Battery DISCHARGE (RED when total > fc)
                 if (showPhase >= 3 && currentProfile.length > 1) {
                     ctx.fillStyle = 'rgba(244, 67, 54, 0.7)';
                     
@@ -411,25 +440,50 @@
                         const p1 = currentProfile[i];
                         const p2 = currentProfile[i + 1];
                         
-                        if (p1.total > p1.fc && p2.total > p2.fc) {
+                        const EPSILON = 0.001;
+                        const p1Above = p1.total > p1.fc + EPSILON;
+                        const p2Above = p2.total > p2.fc + EPSILON;
+                        const p1Equal = Math.abs(p1.total - p1.fc) < EPSILON;
+                        const p2Equal = Math.abs(p2.total - p2.fc) < EPSILON;
+                        
+                        if ((p1Above || p1Equal) && (p2Above || p2Equal)) {
+                            // Both points: total >= fc, draw trapezoid
                             ctx.beginPath();
-                            const x1 = 60 + p1.t * 30;
-                            const x2 = 60 + p2.t * 30;
-                            const yFC1 = 260 - p1.fc * 47.5;
-                            const yFC2 = 260 - p2.fc * 47.5;
-                            const yTotal1 = 260 - p1.total * 47.5;
-                            const yTotal2 = 260 - p2.total * 47.5;
-                            
-                            ctx.moveTo(x1, yFC1);
-                            ctx.lineTo(x2, yFC2);
-                            ctx.lineTo(x2, yTotal2);
-                            ctx.lineTo(x1, yTotal1);
+                            ctx.moveTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                            ctx.lineTo(60 + p1.t * 30, 260 - p1.total * 47.5);
                             ctx.closePath();
                             ctx.fill();
+                        } else if ((p1Above || p1Equal) && !p2Above && !p2Equal) {
+                            // Crosses from above to below
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        } else if (!p1Above && !p1Equal && (p2Above || p2Equal)) {
+                            // Crosses from below to above
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
                         }
                     }
                 }
                 
+                // Phase 4: Battery CHARGE (GREEN when fc > total)
                 if (showPhase >= 4 && currentProfile.length > 1) {
                     ctx.fillStyle = 'rgba(76, 175, 80, 0.7)';
                     
@@ -437,21 +491,45 @@
                         const p1 = currentProfile[i];
                         const p2 = currentProfile[i + 1];
                         
-                        if (p1.fc > p1.total && p2.fc > p2.total) {
+                        const EPSILON = 0.001;
+                        const p1Below = p1.fc > p1.total + EPSILON;
+                        const p2Below = p2.fc > p2.total + EPSILON;
+                        const p1Equal = Math.abs(p1.total - p1.fc) < EPSILON;
+                        const p2Equal = Math.abs(p2.total - p2.fc) < EPSILON;
+                        
+                        if ((p1Below || p1Equal) && (p2Below || p2Equal)) {
+                            // Both points: fc >= total, draw trapezoid
                             ctx.beginPath();
-                            const x1 = 60 + p1.t * 30;
-                            const x2 = 60 + p2.t * 30;
-                            const yFC1 = 260 - p1.fc * 47.5;
-                            const yFC2 = 260 - p2.fc * 47.5;
-                            const yTotal1 = 260 - p1.total * 47.5;
-                            const yTotal2 = 260 - p2.total * 47.5;
-                            
-                            ctx.moveTo(x1, yTotal1);
-                            ctx.lineTo(x2, yTotal2);
-                            ctx.lineTo(x2, yFC2);
-                            ctx.lineTo(x1, yFC1);
+                            ctx.moveTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                            ctx.lineTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
                             ctx.closePath();
                             ctx.fill();
+                        } else if ((p1Below || p1Equal) && !p2Below && !p2Equal) {
+                            // Crosses from below to above
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        } else if (!p1Below && !p1Equal && (p2Below || p2Equal)) {
+                            // Crosses from above to below
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
                         }
                     }
                 }
