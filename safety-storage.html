@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety & Storage - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 89%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="index.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn active">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 7: Safety & Storage -->
+        <div class="module">
+            <h2>🛡️ Module 7: Safety & Storage</h2>
+
+            <h3>Hydrogen Properties</h3>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Hydrogen</th>
+                    <th>Gasoline</th>
+                </tr>
+                <tr>
+                    <td>Flammability Range</td>
+                    <td>4-75%</td>
+                    <td>1-7.6%</td>
+                </tr>
+                <tr>
+                    <td>Auto-ignition Temp</td>
+                    <td>585°C</td>
+                    <td>228-501°C</td>
+                </tr>
+                <tr>
+                    <td>Density vs Air</td>
+                    <td>14× lighter (rises fast)</td>
+                    <td>Heavier (pools)</td>
+                </tr>
+                <tr>
+                    <td>Toxicity</td>
+                    <td>Non-toxic</td>
+                    <td>Carcinogenic</td>
+                </tr>
+            </table>
+
+            <h3>Type IV Hydrogen Storage Tank</h3>
+            <div class="info-box">
+                <p><strong>Construction:</strong> Polymer liner wrapped with carbon fiber</p>
+                <p><strong>Pressure:</strong> 700 bar (10,000 psi) standard</p>
+                <p><strong>Weight:</strong> 40-45 kg for 1 kg H₂ capacity</p>
+                <p><strong>Capacity:</strong> 6-7 wt% gravimetric density</p>
+                <p><strong>Safety:</strong> Pressure relief device (PRD), thermal protection</p>
+                <p><strong>Lifetime:</strong> 15-20 years or 10,000-20,000 fill cycles</p>
+            </div>
+
+            <h3>Safety Standards</h3>
+            <table>
+                <tr>
+                    <th>Standard</th>
+                    <th>Title</th>
+                    <th>Scope</th>
+                </tr>
+                <tr>
+                    <td>UN ECE R134</td>
+                    <td>Hydrogen and Fuel Cell Vehicles</td>
+                    <td>Vehicle-level safety</td>
+                </tr>
+                <tr>
+                    <td>SAE J2579</td>
+                    <td>Fuel Systems in Fuel Cell Vehicles</td>
+                    <td>Design and testing</td>
+                </tr>
+                <tr>
+                    <td>ISO 19881</td>
+                    <td>Land Vehicle Fuel Containers</td>
+                    <td>Tank certification</td>
+                </tr>
+                <tr>
+                    <td>NFPA 2</td>
+                    <td>Hydrogen Technologies Code</td>
+                    <td>Storage, handling, use</td>
+                </tr>
+            </table>
+
+            <div class="key-point">
+                <h3>Emergency Response</h3>
+                <p><strong>Hydrogen Leak:</strong></p>
+                <ul>
+                    <li>Sensor alarm triggers automatic H₂ valve closure</li>
+                    <li>Ventilate area (hydrogen rises rapidly)</li>
+                    <li>No ignition sources until concentration <1%</li>
+                    <li>Locate and repair leak before restarting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (89% for eighth module - 8/9)
+        document.getElementById('progressBar').style.width = '89%';
+    </script>
+</body>
+</html>

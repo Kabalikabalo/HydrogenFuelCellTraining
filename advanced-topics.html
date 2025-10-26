@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Topics - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 100%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="index.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn active">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 8: Advanced Topics -->
+        <div class="module">
+            <h2>🚀 Module 8: Advanced Topics</h2>
+
+            <h3>Stack Technology Advances</h3>
+            <table>
+                <tr>
+                    <th>Technology</th>
+                    <th>Current (2024)</th>
+                    <th>Target (2030)</th>
+                </tr>
+                <tr>
+                    <td>Pt Loading</td>
+                    <td>0.2-0.4 mg/cm²</td>
+                    <td>0.1-0.125 mg/cm²</td>
+                </tr>
+                <tr>
+                    <td>Power Density</td>
+                    <td>0.8-1.2 W/cm²</td>
+                    <td>1.5-2.0 W/cm²</td>
+                </tr>
+                <tr>
+                    <td>Lifetime</td>
+                    <td>5,000-8,000 hours</td>
+                    <td>10,000-15,000 hours</td>
+                </tr>
+                <tr>
+                    <td>Stack Cost</td>
+                    <td>$80-150/kW</td>
+                    <td>$30-45/kW</td>
+                </tr>
+            </table>
+
+            <h3>Green Hydrogen Production</h3>
+            <div class="info-box">
+                <p><strong>Electrolysis with Renewable Energy:</strong></p>
+                <p>H₂O → H₂ + O₂ (using solar/wind electricity)</p>
+                <p><strong>Efficiency:</strong> 70-85%</p>
+                <p><strong>Current Cost:</strong> $5-8/kg (2024)</p>
+                <p><strong>Target Cost:</strong> $1-2/kg (competitive with fossil fuels)</p>
+            </div>
+
+            <h3>Future Outlook</h3>
+            <div class="key-point">
+                <h4>Near-Term (2025-2027):</h4>
+                <ul>
+                    <li>Continued deployment in resort and campus applications</li>
+                    <li>5-10% cost reduction through volume production</li>
+                    <li>Expanded refueling infrastructure at fleet locations</li>
+                </ul>
+                
+                <h4>Medium-Term (2028-2032):</h4>
+                <ul>
+                    <li>Stack costs drop to $40-50/kW (50% reduction)</li>
+                    <li>Standardized "fuel cell kits" for golf carts</li>
+                    <li>Green hydrogen below $3/kg in many regions</li>
+                </ul>
+                
+                <h4>Long-Term (2033+):</h4>
+                <ul>
+                    <li>FC systems cost-competitive with lithium batteries</li>
+                    <li>Widespread hydrogen infrastructure</li>
+                    <li>Near-zero emissions light vehicle transportation achieved</li>
+                </ul>
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                <h3 style="color: white;">🎓 Course Complete!</h3>
+                <p>You now understand:</p>
+                <ul>
+                    <li>✓ Fuel cell fundamentals and PEM technology</li>
+                    <li>✓ Complete system architecture</li>
+                    <li>✓ Hybrid integration topologies</li>
+                    <li>✓ Power management strategies</li>
+                    <li>✓ Safety and storage systems</li>
+                    <li>✓ Future developments</li>
+                </ul>
+                <p style="margin-top: 1rem;">This knowledge prepares you for real-world hydrogen fuel cell system design and integration!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (100% for ninth module - 9/9)
+        document.getElementById('progressBar').style.width = '100%';
+    </script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Management - Hydrogen Fuel Cell Propulsion Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 78%;
+            transition: width 0.5s;
+        }
+        
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 150px;
+            z-index: 99;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        
+        h4 {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        p, li { margin-bottom: 0.8rem; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 5px solid #f5576c;
+        }
+        
+        .canvas-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        canvas {
+            display: block;
+            margin: 1rem auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin: 0.3rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .module { padding: 1.5rem; }
+            .nav { top: 120px; }
+            canvas { width: 100% !important; height: auto !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
+        <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <a href="index.html" class="nav-btn">Introduction</a>
+        <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
+        <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
+        <a href="system-components.html" class="nav-btn">System Components</a>
+        <a href="golf-cart-application.html" class="nav-btn">Golf Cart App</a>
+        <a href="hybrid-integration.html" class="nav-btn">Hybrid Integration</a>
+        <a href="power-management.html" class="nav-btn active">Power Management</a>
+        <a href="safety-storage.html" class="nav-btn">Safety & Storage</a>
+        <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
+    </div>
+
+    <div class="container">
+        <!-- Module 6: Power Management -->
+        <div class="module">
+            <h2>⚡ Module 6: Power Management</h2>
+
+            <h3>Control Strategies</h3>
+            <div class="info-box">
+                <h4>1. Constant Power Strategy (Recommended):</h4>
+                <p>FC runs at constant optimal power (60-70% rated)</p>
+                <p>Battery provides all power variation</p>
+                <p><strong>Advantages:</strong> Extended FC life, optimal efficiency</p>
+                
+                <h4 style="margin-top: 1.5rem;">2. Load Following Strategy:</h4>
+                <p>FC output tracks load demand directly</p>
+                <p><strong>Disadvantages:</strong> Frequent power changes reduce stack life</p>
+            </div>
+
+            <h3>Drive Cycle Simulation</h3>
+            <div class="canvas-box">
+                <canvas id="powerCanvas" width="700" height="300"></canvas>
+                <button class="btn" onclick="drawPowerManagement()">▶ Simulate Drive Cycle</button>
+                <p style="margin-top: 1rem;"><strong>Figure 6.1:</strong> Hybrid power split during typical golf cart operation</p>
+            </div>
+
+            <h3>Battery SOC Management</h3>
+            <table>
+                <tr>
+                    <th>SOC Range</th>
+                    <th>Operating Mode</th>
+                    <th>Strategy</th>
+                </tr>
+                <tr>
+                    <td>90-100%</td>
+                    <td>Full Charge</td>
+                    <td>FC output reduced, battery provides main power</td>
+                </tr>
+                <tr>
+                    <td>50-90%</td>
+                    <td>Normal Operation</td>
+                    <td>Hybrid mode, optimal power split</td>
+                </tr>
+                <tr>
+                    <td>30-50%</td>
+                    <td>Charge Priority</td>
+                    <td>FC runs at higher power to recharge battery</td>
+                </tr>
+                <tr>
+                    <td>20-30%</td>
+                    <td>Low Battery Warning</td>
+                    <td>FC maximum output, limited battery discharge</td>
+                </tr>
+            </table>
+
+            <div class="key-point">
+                <h3>Key Takeaway</h3>
+                <p>Operating the FC at 50-70% of maximum power provides the best balance between efficiency, component life, and performance. The hybrid battery handles power variations, allowing the FC to run in its optimal range.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update progress bar (78% for seventh module - 7/9)
+        document.getElementById('progressBar').style.width = '78%';
+
+        // Canvas: Power Management with Sequential Animation
+        function drawPowerManagement() {
+            const canvas = document.getElementById('powerCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            const profile = [
+                {t:0, total:0, fc:0}, {t:2, total:2, fc:2}, {t:4, total:2, fc:2},
+                {t:6, total:4.5, fc:3}, {t:8, total:2.5, fc:3}, {t:10, total:2, fc:2.5},
+                {t:12, total:3.5, fc:3}, {t:14, total:2, fc:2.5}, {t:16, total:0.5, fc:2},
+                {t:18, total:0, fc:0}
+            ];
+            
+            let currentIndex = 0;
+            let phase = 1;
+            let isAnimating = false;
+            
+            function clearAndDrawAxes() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, w, h);
+                
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(60, 70);
+                ctx.lineTo(60, 260);
+                ctx.lineTo(660, 260);
+                ctx.stroke();
+                
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 1;
+                for (let i = 1; i <= 4; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(60, 70 + i * 47.5);
+                    ctx.lineTo(660, 70 + i * 47.5);
+                    ctx.stroke();
+                }
+                
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Time (seconds)', 360, 290);
+                
+                ctx.save();
+                ctx.translate(20, 165);
+                ctx.rotate(-Math.PI/2);
+                ctx.fillText('Power (kW)', 0, 0);
+                ctx.restore();
+                
+                ctx.font = '11px Arial';
+                ctx.textAlign = 'right';
+                for (let i = 0; i <= 4; i++) {
+                    ctx.fillText(i.toString(), 55, 265 - i * 47.5);
+                }
+            }
+            
+            function drawProfile(endIndex, showPhase) {
+                clearAndDrawAxes();
+                
+                const currentProfile = profile.slice(0, endIndex + 1);
+                
+                if (showPhase >= 1 && currentProfile.length > 0) {
+                    ctx.setLineDash([5, 5]);
+                    ctx.strokeStyle = '#333';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    currentProfile.forEach((p, i) => {
+                        const x = 60 + p.t * 30;
+                        const y = 260 - p.total * 47.5;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    });
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                
+                if (showPhase >= 2 && currentProfile.length > 0) {
+                    ctx.fillStyle = 'rgba(123, 31, 162, 0.5)';
+                    ctx.beginPath();
+                    currentProfile.forEach((p, i) => {
+                        const x = 60 + p.t * 30;
+                        const y = 260 - p.fc * 47.5;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    });
+                    ctx.lineTo(60 + currentProfile[currentProfile.length - 1].t * 30, 260);
+                    ctx.lineTo(60, 260);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.strokeStyle = '#7b1fa2';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    currentProfile.forEach((p, i) => {
+                        const x = 60 + p.t * 30;
+                        const y = 260 - p.fc * 47.5;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    });
+                    ctx.stroke();
+                }
+                
+                // Helper function to find intersection point between two line segments
+                function findIntersection(p1, p2) {
+                    const EPSILON = 0.001; // Small tolerance for floating point comparison
+                    
+                    // Check if p1 is at intersection point
+                    if (Math.abs(p1.total - p1.fc) < EPSILON) {
+                        return p1;
+                    }
+                    
+                    // Check if p2 is at intersection point
+                    if (Math.abs(p2.total - p2.fc) < EPSILON) {
+                        return p2;
+                    }
+                    
+                    // Find where total crosses fc between p1 and p2
+                    if ((p1.total - p1.fc) * (p2.total - p2.fc) > 0) return null; // No crossing
+                    
+                    // Linear interpolation to find crossing point
+                    const diff1 = p1.total - p1.fc;
+                    const diff2 = p2.total - p2.fc;
+                    const ratio = Math.abs(diff1) / (Math.abs(diff1) + Math.abs(diff2));
+                    
+                    const t = p1.t + (p2.t - p1.t) * ratio;
+                    const value = p1.fc + (p2.fc - p1.fc) * ratio;
+                    
+                    return { t: t, fc: value, total: value };
+                }
+                
+                // Phase 3: Battery DISCHARGE (RED when total > fc)
+                if (showPhase >= 3 && currentProfile.length > 1) {
+                    ctx.fillStyle = 'rgba(244, 67, 54, 0.7)';
+                    
+                    for (let i = 0; i < currentProfile.length - 1; i++) {
+                        const p1 = currentProfile[i];
+                        const p2 = currentProfile[i + 1];
+                        
+                        const EPSILON = 0.001;
+                        const p1Above = p1.total > p1.fc + EPSILON;
+                        const p2Above = p2.total > p2.fc + EPSILON;
+                        const p1Equal = Math.abs(p1.total - p1.fc) < EPSILON;
+                        const p2Equal = Math.abs(p2.total - p2.fc) < EPSILON;
+                        
+                        if ((p1Above || p1Equal) && (p2Above || p2Equal)) {
+                            // Both points: total >= fc, draw trapezoid
+                            ctx.beginPath();
+                            ctx.moveTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                            ctx.lineTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                            ctx.closePath();
+                            ctx.fill();
+                        } else if ((p1Above || p1Equal) && !p2Above && !p2Equal) {
+                            // Crosses from above to below
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        } else if (!p1Above && !p1Equal && (p2Above || p2Equal)) {
+                            // Crosses from below to above
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+                
+                // Phase 4: Battery CHARGE (GREEN when fc > total)
+                if (showPhase >= 4 && currentProfile.length > 1) {
+                    ctx.fillStyle = 'rgba(76, 175, 80, 0.7)';
+                    
+                    for (let i = 0; i < currentProfile.length - 1; i++) {
+                        const p1 = currentProfile[i];
+                        const p2 = currentProfile[i + 1];
+                        
+                        const EPSILON = 0.001;
+                        const p1Below = p1.fc > p1.total + EPSILON;
+                        const p2Below = p2.fc > p2.total + EPSILON;
+                        const p1Equal = Math.abs(p1.total - p1.fc) < EPSILON;
+                        const p2Equal = Math.abs(p2.total - p2.fc) < EPSILON;
+                        
+                        if ((p1Below || p1Equal) && (p2Below || p2Equal)) {
+                            // Both points: fc >= total, draw trapezoid
+                            ctx.beginPath();
+                            ctx.moveTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                            ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                            ctx.lineTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                            ctx.closePath();
+                            ctx.fill();
+                        } else if ((p1Below || p1Equal) && !p2Below && !p2Equal) {
+                            // Crosses from below to above
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + p1.t * 30, 260 - p1.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.lineTo(60 + p1.t * 30, 260 - p1.fc * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        } else if (!p1Below && !p1Equal && (p2Below || p2Equal)) {
+                            // Crosses from above to below
+                            const intersection = findIntersection(p1, p2);
+                            if (intersection) {
+                                ctx.beginPath();
+                                ctx.moveTo(60 + intersection.t * 30, 260 - intersection.total * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.total * 47.5);
+                                ctx.lineTo(60 + p2.t * 30, 260 - p2.fc * 47.5);
+                                ctx.lineTo(60 + intersection.t * 30, 260 - intersection.fc * 47.5);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+                
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 11px Arial';
+                ctx.textAlign = 'left';
+                if (showPhase >= 1) ctx.fillText('━━━  Total Demand', 560, 45);
+                if (showPhase >= 2) {
+                    ctx.fillStyle = '#7b1fa2';
+                    ctx.fillText('━━━  Fuel Cell Output', 560, 58);
+                }
+                if (showPhase >= 3) {
+                    ctx.fillStyle = '#f44336';
+                    ctx.fillText('▮▮▮  Battery DISCHARGE', 560, 71);
+                }
+                if (showPhase >= 4) {
+                    ctx.fillStyle = '#4caf50';
+                    ctx.fillText('▮▮▮  Battery CHARGE', 560, 84);
+                }
+                
+                if (showPhase >= 4 && endIndex === profile.length - 1) {
+                    ctx.fillStyle = '#f44336';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Battery', 240, 35);
+                    ctx.fillText('Discharging', 240, 48);
+                    
+                    ctx.strokeStyle = '#f44336';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(240, 52);
+                    ctx.lineTo(240, 110);
+                    ctx.stroke();
+                    ctx.fillStyle = '#f44336';
+                    ctx.beginPath();
+                    ctx.moveTo(240, 110);
+                    ctx.lineTo(235, 103);
+                    ctx.lineTo(245, 103);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.fillText('Battery', 540, 35);
+                    ctx.fillText('Charging', 540, 48);
+                    
+                    ctx.strokeStyle = '#4caf50';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(540, 52);
+                    ctx.lineTo(540, 210);
+                    ctx.stroke();
+                    ctx.fillStyle = '#4caf50';
+                    ctx.beginPath();
+                    ctx.moveTo(540, 210);
+                    ctx.lineTo(535, 203);
+                    ctx.lineTo(545, 203);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+            
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            const animationInterval = setInterval(() => {
+                drawProfile(currentIndex, phase);
+                
+                if (currentIndex < profile.length - 1) {
+                    currentIndex++;
+                } else {
+                    if (phase < 4) {
+                        phase++;
+                        currentIndex = 0;
+                    } else {
+                        clearInterval(animationInterval);
+                        isAnimating = false;
+                    }
+                }
+            }, 300);
+        }
+
+        // Auto-draw canvas on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                drawPowerManagement();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
